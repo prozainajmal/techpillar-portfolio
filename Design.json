@@ -1,0 +1,131 @@
+{
+    "design_system": "ORLIVE_USON_Profile",
+    "brand_identity": {
+      "name": "ORLIVE",
+      "philosophy": "minimal_modern_professional",
+      "aesthetic": "clean_geometric_bold_typography"
+    },
+    "typography": {
+      "display_heading": {
+        "family": "sans_serif_condensed",
+        "weight": "900_black",
+        "case": "uppercase",
+        "letter_spacing": "-0.02em",
+        "line_height": "0.85",
+        "size": "clamp(80px, 8vw, 120px)",
+        "treatment": "stacked_dramatic_left_aligned"
+      },
+      "body_text": {
+        "family": "sans_serif_regular",
+        "weight": "400",
+        "size": "18px",
+        "line_height": "1.6",
+        "color": "#4a4a4a",
+        "max_width": "400px"
+      },
+      "navigation": {
+        "family": "sans_serif_medium",
+        "weight": "500",
+        "size": "14px",
+        "case": "sentence_case"
+      }
+    },
+    "colors": {
+      "primary": {
+        "text": "#1a1a1a",
+        "background": "#ffffff"
+      },
+      "secondary": {
+        "text": "#4a4a4a",
+        "background": "#f8f8f8"
+      },
+      "accent": {
+        "button": "#2a2a2a",
+        "hover": "#3a3a3a"
+      }
+    },
+    "layout": {
+      "structure": "asymmetric_split_60_40",
+      "grid": {
+        "left_content": "60%",
+        "right_visual": "40%"
+      },
+      "spacing": {
+        "unit": "8px",
+        "scale": [8, 16, 24, 32, 48, 64, 96, 128],
+        "section_padding": "128px vertical"
+      },
+      "container": {
+        "max_width": "1200px",
+        "margins": "24px mobile, 48px desktop"
+      }
+    },
+    "components": {
+      "navigation": {
+        "type": "horizontal_minimal",
+        "height": "80px",
+        "layout": "left_nav_center_logo_right_nav",
+        "background": "white_clean",
+        "item_spacing": "32px"
+      },
+      "hero": {
+        "layout": "split_screen",
+        "text_position": "left_60_percent",
+        "visual_position": "right_40_percent",
+        "alignment": "vertical_center"
+      },
+      "button": {
+        "style": "solid_rectangular",
+        "padding": "16px 32px",
+        "border_radius": "0px",
+        "text_transform": "uppercase",
+        "background": "dark",
+        "color": "white",
+        "font_weight": "500"
+      }
+    },
+    "visual_hierarchy": {
+      "primary_headline": {
+        "dominance": "high",
+        "positioning": "left_side_prominent",
+        "word_treatment": "vertical_stacking",
+        "emphasis": "maximum_impact"
+      },
+      "supporting_text": {
+        "positioning": "below_headline_constrained",
+        "width": "limited_readability",
+        "tone": "descriptive_benefit_focused"
+      },
+      "visual_content": {
+        "positioning": "right_side_contextual",
+        "treatment": "clean_professional_lifestyle"
+      }
+    },
+    "interactions": {
+      "hover_states": {
+        "buttons": "darken_10_percent",
+        "navigation": "subtle_underline",
+        "duration": "300ms",
+        "easing": "ease_out"
+      },
+      "responsive": {
+        "approach": "mobile_first",
+        "breakpoints": ["768px", "1024px", "1200px"],
+        "behavior": "stack_vertical_mobile"
+      }
+    },
+    "content_patterns": {
+      "messaging": {
+        "primary": "bold_keyword_focus",
+        "secondary": "benefit_driven_description",
+        "cta": "action_oriented_uppercase"
+      },
+      "tone": "professional_confident_minimal"
+    },
+    "design_principles": {
+      "white_space": "generous_breathing_room",
+      "contrast": "high_readability",
+      "balance": "asymmetric_intentional",
+      "focus": "content_first_minimal_distraction"
+    }
+  }
