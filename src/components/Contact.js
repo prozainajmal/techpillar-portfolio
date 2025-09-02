@@ -8,8 +8,10 @@ import {
   MapPin, 
   Clock, 
   Send,
-  CheckCircle
+  CheckCircle,
+  AlertCircle
 } from 'lucide-react';
+import { sendContactFormEmail } from '../services/emailService';
 
 const ContactSection = styled.section`
   padding: 128px 24px;
@@ -102,6 +104,10 @@ const FormInput = styled.input`
   &::placeholder {
     color: var(--text-muted);
   }
+  
+  &.error {
+    border-color: var(--error);
+  }
 `;
 
 const FormTextarea = styled.textarea`
@@ -123,6 +129,37 @@ const FormTextarea = styled.textarea`
   
   &::placeholder {
     color: var(--text-muted);
+  }
+  
+  &.error {
+    border-color: var(--error);
+  }
+`;
+
+const FormSelect = styled.select`
+  width: 100%;
+  padding: 16px;
+  border: 2px solid var(--border-primary);
+  border-radius: 8px;
+  font-size: 16px;
+  background: var(--background-secondary);
+  color: var(--text-primary);
+  transition: border-color 0.3s ease;
+  cursor: pointer;
+  
+  &:focus {
+    outline: none;
+    border-color: var(--primary-light);
+  }
+  
+  option {
+    background: var(--background-secondary);
+    color: var(--text-primary);
+    padding: 8px;
+  }
+  
+  &.error {
+    border-color: var(--error);
   }
 `;
 
@@ -209,6 +246,27 @@ const InfoContent = styled.div`
   line-height: 1.6;
 `;
 
+const ErrorMessage = styled.div`
+  color: var(--error);
+  font-size: 14px;
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+`;
+
+const ErrorAlert = styled(motion.div)`
+  background: var(--error);
+  color: var(--text-inverse);
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 500;
+`;
+
 const SuccessMessage = styled(motion.div)`
   background: var(--success);
   color: var(--text-inverse);
@@ -266,6 +324,24 @@ const CTAButton = styled.button`
   }
 `;
 
+// Service options for dropdown
+const serviceOptions = [
+  { value: '', label: 'Select a service...' },
+  { value: 'web-development', label: 'Web Development' },
+  { value: 'mobile-development', label: 'Mobile Development' },
+  { value: 'ai-ml-solutions', label: 'AI/ML Solutions' },
+  { value: 'cloud-devops', label: 'Cloud & DevOps' },
+  { value: 'database-solutions', label: 'Database Solutions' },
+  { value: 'security-testing', label: 'Security & Testing' },
+  { value: 'seo-sem', label: 'SEO & SEM' },
+  { value: 'social-media-marketing', label: 'Social Media Marketing' },
+  { value: 'email-marketing', label: 'Email Marketing' },
+  { value: 'content-marketing', label: 'Content Marketing' },
+  { value: 'ppc-display', label: 'PPC & Display Advertising' },
+  { value: 'analytics-reporting', label: 'Analytics & Reporting' },
+  { value: 'custom-solution', label: 'Custom Solution' }
+];
+
 const Contact = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -274,13 +350,42 @@ const Contact = () => {
     service: '',
     message: ''
   });
+  const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState('');
   
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1
   });
+
+  const validateForm = () => {
+    const newErrors = {};
+    
+    if (!formData.name.trim()) {
+      newErrors.name = 'Full name is required';
+    }
+    
+    if (!formData.email.trim()) {
+      newErrors.email = 'Email address is required';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = 'Please enter a valid email address';
+    }
+    
+    if (!formData.service) {
+      newErrors.service = 'Please select a service';
+    }
+    
+    if (!formData.message.trim()) {
+      newErrors.message = 'Message is required';
+    } else if (formData.message.trim().length < 10) {
+      newErrors.message = 'Message must be at least 10 characters long';
+    }
+    
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -288,21 +393,47 @@ const Contact = () => {
       ...prev,
       [name]: value
     }));
+    
+    // Clear error when user starts typing
+    if (errors[name]) {
+      setErrors(prev => ({
+        ...prev,
+        [name]: ''
+      }));
+    }
+  };
+
+  const sendEmail = async (formData) => {
+    try {
+      // Use the professional email service
+      const result = await sendContactFormEmail(formData, serviceOptions);
+      
+      if (result.success) {
+        console.log('✅ Email sent successfully:', result.message);
+        return true;
+      } else {
+        throw new Error('Email service returned an error');
+      }
+    } catch (error) {
+      console.error('❌ Error sending email:', error);
+      throw new Error('Failed to send email. Please try again or contact us directly.');
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    if (!validateForm()) {
+      return;
+    }
+    
     setIsSubmitting(true);
+    setSubmitError('');
     
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    setIsSubmitting(false);
-    setIsSubmitted(true);
-    
-    // Reset form after 5 seconds
-    setTimeout(() => {
-      setIsSubmitted(false);
+    try {
+      await sendEmail(formData);
+      
+      setIsSubmitted(true);
       setFormData({
         name: '',
         email: '',
@@ -310,7 +441,18 @@ const Contact = () => {
         service: '',
         message: ''
       });
-    }, 5000);
+      setErrors({});
+      
+      // Reset success message after 8 seconds
+      setTimeout(() => {
+        setIsSubmitted(false);
+      }, 8000);
+      
+    } catch (error) {
+      setSubmitError(error.message);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const containerVariants = {
@@ -353,8 +495,18 @@ const Contact = () => {
                 animate={{ opacity: 1, y: 0 }}
               >
                 <CheckCircle size={20} />
-                Thank you! Your message has been sent successfully.
+                Thank you! Your message has been sent successfully. We'll get back to you within 24 hours.
               </SuccessMessage>
+            )}
+            
+            {submitError && (
+              <ErrorAlert
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+              >
+                <AlertCircle size={20} />
+                {submitError}
+              </ErrorAlert>
             )}
             
             <form onSubmit={handleSubmit}>
@@ -366,8 +518,14 @@ const Contact = () => {
                   value={formData.name}
                   onChange={handleInputChange}
                   placeholder="Enter your full name"
-                  required
+                  className={errors.name ? 'error' : ''}
                 />
+                {errors.name && (
+                  <ErrorMessage>
+                    <AlertCircle size={16} />
+                    {errors.name}
+                  </ErrorMessage>
+                )}
               </FormGroup>
               
               <FormGroup>
@@ -378,8 +536,14 @@ const Contact = () => {
                   value={formData.email}
                   onChange={handleInputChange}
                   placeholder="Enter your email address"
-                  required
+                  className={errors.email ? 'error' : ''}
                 />
+                {errors.email && (
+                  <ErrorMessage>
+                    <AlertCircle size={16} />
+                    {errors.email}
+                  </ErrorMessage>
+                )}
               </FormGroup>
               
               <FormGroup>
@@ -394,14 +558,25 @@ const Contact = () => {
               </FormGroup>
               
               <FormGroup>
-                <FormLabel>Service Interest</FormLabel>
-                <FormInput
-                  type="text"
+                <FormLabel>Service Interest *</FormLabel>
+                <FormSelect
                   name="service"
                   value={formData.service}
                   onChange={handleInputChange}
-                  placeholder="What service are you interested in?"
-                />
+                  className={errors.service ? 'error' : ''}
+                >
+                  {serviceOptions.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </FormSelect>
+                {errors.service && (
+                  <ErrorMessage>
+                    <AlertCircle size={16} />
+                    {errors.service}
+                  </ErrorMessage>
+                )}
               </FormGroup>
               
               <FormGroup>
@@ -411,8 +586,14 @@ const Contact = () => {
                   value={formData.message}
                   onChange={handleInputChange}
                   placeholder="Tell us about your project or requirements"
-                  required
+                  className={errors.message ? 'error' : ''}
                 />
+                {errors.message && (
+                  <ErrorMessage>
+                    <AlertCircle size={16} />
+                    {errors.message}
+                  </ErrorMessage>
+                )}
               </FormGroup>
               
               <SubmitButton type="submit" disabled={isSubmitting}>
