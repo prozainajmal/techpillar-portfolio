@@ -20,6 +20,7 @@ import {
   Play,
   Certificate
 } from 'lucide-react';
+import EnrollmentForm from './EnrollmentForm';
 
 const AcademySection = styled.section`
   padding: 128px 24px;
@@ -484,6 +485,25 @@ const Academy = () => {
     threshold: 0.1
   });
 
+  const [enrollmentForm, setEnrollmentForm] = useState({
+    isOpen: false,
+    courseTitle: ''
+  });
+
+  const handleEnrollClick = (courseTitle) => {
+    setEnrollmentForm({
+      isOpen: true,
+      courseTitle: courseTitle
+    });
+  };
+
+  const closeEnrollmentForm = () => {
+    setEnrollmentForm({
+      isOpen: false,
+      courseTitle: ''
+    });
+  };
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -597,7 +617,9 @@ const Academy = () => {
                         <BackFeature key={idx}>{feature}</BackFeature>
                       ))}
                     </BackFeatures>
-                    <EnrollButton>Enroll Now</EnrollButton>
+                    <EnrollButton onClick={() => handleEnrollClick(course.title)}>
+                      Enroll Now
+                    </EnrollButton>
                   </FlipCardBack>
                 </FlipCardInner>
               </FlipCard>
@@ -649,7 +671,9 @@ const Academy = () => {
                         <BackFeature key={idx}>{feature}</BackFeature>
                       ))}
                     </BackFeatures>
-                    <EnrollButton>Enroll Now</EnrollButton>
+                    <EnrollButton onClick={() => handleEnrollClick(course.title)}>
+                      Enroll Now
+                    </EnrollButton>
                   </FlipCardBack>
                 </FlipCardInner>
               </FlipCard>
@@ -701,7 +725,9 @@ const Academy = () => {
                         <BackFeature key={idx}>{feature}</BackFeature>
                       ))}
                     </BackFeatures>
-                    <EnrollButton>Enroll Now</EnrollButton>
+                    <EnrollButton onClick={() => handleEnrollClick(course.title)}>
+                      Enroll Now
+                    </EnrollButton>
                   </FlipCardBack>
                 </FlipCardInner>
               </FlipCard>
@@ -714,9 +740,18 @@ const Academy = () => {
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.8 }}
         >
-          <CTAButton>View All Courses & Enroll</CTAButton>
+          <CTAButton onClick={() => handleEnrollClick('')}>
+            View All Courses & Enroll
+          </CTAButton>
         </motion.div>
       </Container>
+
+      {/* Enrollment Form Popup */}
+      <EnrollmentForm
+        isOpen={enrollmentForm.isOpen}
+        onClose={closeEnrollmentForm}
+        courseTitle={enrollmentForm.courseTitle}
+      />
     </AcademySection>
   );
 };
