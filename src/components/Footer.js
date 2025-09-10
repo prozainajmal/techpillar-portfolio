@@ -304,15 +304,15 @@ const Footer = () => {
             <div className="contact-info">
               <div className="contact-item">
                 <Mail />
-                hello@techpillar.com
+                techpillaracademy@gmail.com
               </div>
               <div className="contact-item">
                 <Phone />
-                +1 (555) 123-4567
+                9119109980
               </div>
               <div className="contact-item">
                 <MapPin />
-                Silicon Valley, CA
+                Jaipur, India
               </div>
             </div>
           </CompanyInfo>

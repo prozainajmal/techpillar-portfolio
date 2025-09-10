@@ -616,8 +616,7 @@ const Contact = () => {
                 <InfoTitle>Email Us</InfoTitle>
               </InfoHeader>
               <InfoContent>
-                <p>hello@techpillar.com</p>
-                <p>support@techpillar.com</p>
+                <p>techpillaracademy@gmail.com</p>
               </InfoContent>
             </InfoCard>
             
@@ -629,8 +628,7 @@ const Contact = () => {
                 <InfoTitle>Call Us</InfoTitle>
               </InfoHeader>
               <InfoContent>
-                <p>+1 (555) 123-4567</p>
-                <p>+1 (555) 987-6543</p>
+                <p>9119109980</p>
               </InfoContent>
             </InfoCard>
             
@@ -642,9 +640,9 @@ const Contact = () => {
                 <InfoTitle>Visit Us</InfoTitle>
               </InfoHeader>
               <InfoContent>
-                <p>123 Tech Street</p>
-                <p>Silicon Valley, CA 94025</p>
-                <p>United States</p>
+                <p>TechPillar IT Solutions</p>
+                <p>Jawahar Market, General Sagat Singh Marg</p>
+                <p>Near NBC Hasanpura, Jaipur</p>
               </InfoContent>
             </InfoCard>
             
@@ -656,9 +654,7 @@ const Contact = () => {
                 <InfoTitle>Business Hours</InfoTitle>
               </InfoHeader>
               <InfoContent>
-                <p>Monday - Friday: 9:00 AM - 6:00 PM</p>
-                <p>Saturday: 10:00 AM - 4:00 PM</p>
-                <p>Sunday: Closed</p>
+                <p>Monday - Sunday: 9:00 AM - 8:00 PM</p>
               </InfoContent>
             </InfoCard>
           </ContactInfo>
