@@ -1,11 +1,11 @@
 // Email service for TechPillar contact form
-// This service handles sending professional emails to pro.zainajmal@gmail.com
+// This service handles sending professional emails to techpillaritsolutions@gmail.com
 
 import emailjs from '@emailjs/browser';
 
 // Email configuration
 const EMAIL_CONFIG = {
-  to: 'pro.zainajmal@gmail.com',
+  to: 'techpillaritsolutions@gmail.com',
   from: 'zany0381@gmail.com', // This will be your sending email
   subjectPrefix: 'New Service Inquiry: '
 };
@@ -13,13 +13,13 @@ const EMAIL_CONFIG = {
 // WORKING EMAILJS CONFIGURATION - Replace these with your actual IDs
 // To get these IDs, follow the QUICK_EMAIL_SETUP.md guide
 const EMAILJS_CONFIG = {
-  serviceId: 'service_dh3ywir', // Replace with your actual service ID
-  templateId: 'template_odgf7en', // Replace with your actual template ID
-  userId: 'mdymL1mtK3BTTYscN' // Replace with your actual user ID
+  serviceId: 'service_uqc060v', // Your new service ID
+  templateId: 'template_pqsssxd', // Your new template ID
+  userId: 'QxzG4zH4VMy0vokbE' // Your new user ID
 };
 
 // TEST MODE: Set this to false when you have real EmailJS credentials
-const TEST_MODE = false;
+const TEST_MODE = false; // Real EmailJS credentials configured
 
 // Professional email template generator
 export const generateEmailTemplate = (formData, serviceOptions) => {
@@ -464,7 +464,7 @@ export const sendContactFormEmail = async (formData, serviceOptions) => {
       console.log('📧 TEST MODE: Message:', formData.message);
       
       // Show alert with email details (for testing)
-      alert(`🧪 TEST MODE: Email would be sent to pro.zainajmal@gmail.com\n\nSubject: ${emailData.subject}\nFrom: ${formData.email}\nService: ${serviceOptions.find(opt => opt.value === formData.service)?.label}\n\nTo get real emails, follow the setup guide in QUICK_EMAIL_SETUP.md`);
+      alert(`🧪 TEST MODE: Email would be sent to techpillaritsolutions@gmail.com\n\nSubject: ${emailData.subject}\nFrom: ${formData.email}\nService: ${serviceOptions.find(opt => opt.value === formData.service)?.label}\n\nTo get real emails, follow the setup guide in QUICK_EMAIL_SETUP.md`);
       
       return {
         success: true,
@@ -1009,9 +1009,9 @@ export const sendEnrollmentEmail = async (formData) => {
   }
 
   // Check if EmailJS is properly configured
-  if (EMAILJS_CONFIG.serviceId === 'YOUR_SERVICE_ID' || 
-      EMAILJS_CONFIG.templateId === 'YOUR_TEMPLATE_ID' || 
-      EMAILJS_CONFIG.userId === 'YOUR_USER_ID') {
+  if (EMAILJS_CONFIG.serviceId === 'service_techpillar' || 
+      EMAILJS_CONFIG.templateId === 'template_techpillar' || 
+      EMAILJS_CONFIG.userId === 'user_techpillar') {
     throw new Error('EmailJS not properly configured. Please update the configuration in emailService.js');
   }
 
