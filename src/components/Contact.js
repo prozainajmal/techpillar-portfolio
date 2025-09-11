@@ -163,6 +163,95 @@ const FormSelect = styled.select`
   }
 `;
 
+const PhoneInputContainer = styled.div`
+  display: flex;
+  gap: 8px;
+  align-items: stretch;
+  
+  @media (max-width: 480px) {
+    flex-direction: column;
+    gap: 0;
+  }
+`;
+
+const CountrySelect = styled.select`
+  min-width: 120px;
+  padding: 16px;
+  border: 2px solid var(--border-primary);
+  border-right: 1px solid var(--border-primary);
+  border-radius: 8px 0 0 8px;
+  font-size: 16px;
+  background: var(--background-secondary);
+  color: var(--text-primary);
+  transition: border-color 0.3s ease;
+  cursor: pointer;
+  
+  &:focus {
+    outline: none;
+    border-color: var(--primary-light);
+    border-right-color: var(--border-primary);
+  }
+  
+  option {
+    background: var(--background-secondary);
+    color: var(--text-primary);
+    padding: 8px;
+  }
+  
+  &.error {
+    border-color: var(--error);
+    border-right-color: var(--error);
+  }
+  
+  @media (max-width: 480px) {
+    border-radius: 8px 8px 0 0;
+    border-right: 2px solid var(--border-primary);
+    border-bottom: 1px solid var(--border-primary);
+    min-width: 100%;
+    
+    &.error {
+      border-bottom-color: var(--error);
+    }
+  }
+`;
+
+const PhoneNumberInput = styled.input`
+  flex: 1;
+  padding: 16px;
+  border: 2px solid var(--border-primary);
+  border-left: 1px solid var(--border-primary);
+  border-radius: 0 8px 8px 0;
+  font-size: 16px;
+  background: var(--background-secondary);
+  color: var(--text-primary);
+  transition: border-color 0.3s ease;
+  
+  &:focus {
+    outline: none;
+    border-color: var(--primary-light);
+    border-left-color: var(--border-primary);
+  }
+  
+  &::placeholder {
+    color: var(--text-muted);
+  }
+  
+  &.error {
+    border-color: var(--error);
+    border-left-color: var(--error);
+  }
+  
+  @media (max-width: 480px) {
+    border-left: 2px solid var(--border-primary);
+    border-top: 1px solid var(--border-primary);
+    border-radius: 0 0 8px 8px;
+    
+    &.error {
+      border-top-color: var(--error);
+    }
+  }
+`;
+
 const SubmitButton = styled.button`
   background: var(--gradient-primary);
   color: var(--text-inverse);
@@ -342,10 +431,57 @@ const serviceOptions = [
   { value: 'custom-solution', label: 'Custom Solution' }
 ];
 
+// Country codes for phone number picker
+const countryCodes = [
+  { code: '+91', country: 'India', flag: '🇮🇳' },
+  { code: '+1', country: 'United States', flag: '🇺🇸' },
+  { code: '+44', country: 'United Kingdom', flag: '🇬🇧' },
+  { code: '+33', country: 'France', flag: '🇫🇷' },
+  { code: '+49', country: 'Germany', flag: '🇩🇪' },
+  { code: '+39', country: 'Italy', flag: '🇮🇹' },
+  { code: '+34', country: 'Spain', flag: '🇪🇸' },
+  { code: '+31', country: 'Netherlands', flag: '🇳🇱' },
+  { code: '+41', country: 'Switzerland', flag: '🇨🇭' },
+  { code: '+43', country: 'Austria', flag: '🇦🇹' },
+  { code: '+32', country: 'Belgium', flag: '🇧🇪' },
+  { code: '+45', country: 'Denmark', flag: '🇩🇰' },
+  { code: '+46', country: 'Sweden', flag: '🇸🇪' },
+  { code: '+47', country: 'Norway', flag: '🇳🇴' },
+  { code: '+358', country: 'Finland', flag: '🇫🇮' },
+  { code: '+61', country: 'Australia', flag: '🇦🇺' },
+  { code: '+64', country: 'New Zealand', flag: '🇳🇿' },
+  { code: '+81', country: 'Japan', flag: '🇯🇵' },
+  { code: '+82', country: 'South Korea', flag: '🇰🇷' },
+  { code: '+86', country: 'China', flag: '🇨🇳' },
+  { code: '+65', country: 'Singapore', flag: '🇸🇬' },
+  { code: '+60', country: 'Malaysia', flag: '🇲🇾' },
+  { code: '+66', country: 'Thailand', flag: '🇹🇭' },
+  { code: '+63', country: 'Philippines', flag: '🇵🇭' },
+  { code: '+62', country: 'Indonesia', flag: '🇮🇩' },
+  { code: '+84', country: 'Vietnam', flag: '🇻🇳' },
+  { code: '+55', country: 'Brazil', flag: '🇧🇷' },
+  { code: '+52', country: 'Mexico', flag: '🇲🇽' },
+  { code: '+54', country: 'Argentina', flag: '🇦🇷' },
+  { code: '+56', country: 'Chile', flag: '🇨🇱' },
+  { code: '+57', country: 'Colombia', flag: '🇨🇴' },
+  { code: '+51', country: 'Peru', flag: '🇵🇪' },
+  { code: '+27', country: 'South Africa', flag: '🇿🇦' },
+  { code: '+234', country: 'Nigeria', flag: '🇳🇬' },
+  { code: '+20', country: 'Egypt', flag: '🇪🇬' },
+  { code: '+971', country: 'UAE', flag: '🇦🇪' },
+  { code: '+966', country: 'Saudi Arabia', flag: '🇸🇦' },
+  { code: '+974', country: 'Qatar', flag: '🇶🇦' },
+  { code: '+965', country: 'Kuwait', flag: '🇰🇼' },
+  { code: '+973', country: 'Bahrain', flag: '🇧🇭' },
+  { code: '+968', country: 'Oman', flag: '🇴🇲' }
+];
+
 const Contact = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    phone: '',
+    countryCode: '+91',
     company: '',
     service: '',
     message: ''
@@ -371,6 +507,12 @@ const Contact = () => {
       newErrors.email = 'Email address is required';
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       newErrors.email = 'Please enter a valid email address';
+    }
+    
+    if (!formData.phone.trim()) {
+      newErrors.phone = 'Phone number is required';
+    } else if (!/^[\+]?[1-9][\d]{0,15}$/.test(formData.phone.replace(/\s/g, ''))) {
+      newErrors.phone = 'Please enter a valid phone number';
     }
     
     if (!formData.service) {
@@ -437,6 +579,8 @@ const Contact = () => {
       setFormData({
         name: '',
         email: '',
+        phone: '',
+        countryCode: '+91',
         company: '',
         service: '',
         message: ''
@@ -542,6 +686,38 @@ const Contact = () => {
                   <ErrorMessage>
                     <AlertCircle size={16} />
                     {errors.email}
+                  </ErrorMessage>
+                )}
+              </FormGroup>
+              
+              <FormGroup>
+                <FormLabel>Phone Number *</FormLabel>
+                <PhoneInputContainer>
+                  <CountrySelect
+                    name="countryCode"
+                    value={formData.countryCode}
+                    onChange={handleInputChange}
+                    className={errors.phone ? 'error' : ''}
+                  >
+                    {countryCodes.map((country) => (
+                      <option key={country.code} value={country.code}>
+                        {country.flag} {country.code}
+                      </option>
+                    ))}
+                  </CountrySelect>
+                  <PhoneNumberInput
+                    type="tel"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleInputChange}
+                    placeholder="Enter your phone number"
+                    className={errors.phone ? 'error' : ''}
+                  />
+                </PhoneInputContainer>
+                {errors.phone && (
+                  <ErrorMessage>
+                    <AlertCircle size={16} />
+                    {errors.phone}
                   </ErrorMessage>
                 )}
               </FormGroup>

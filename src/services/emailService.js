@@ -357,6 +357,13 @@ export const generateEmailTemplate = (formData, serviceOptions) => {
                 <div class="info-value">${formData.email}</div>
               </div>
               
+              ${formData.phone ? `
+              <div class="info-card">
+                <div class="info-label">📱 Phone Number</div>
+                <div class="info-value">${formData.countryCode ? `${formData.countryCode} ${formData.phone}` : formData.phone}</div>
+              </div>
+              ` : ''}
+              
               ${formData.company ? `
               <div class="info-card">
                 <div class="info-label">🏢 Company</div>
@@ -429,7 +436,7 @@ export const generateEmailTemplate = (formData, serviceOptions) => {
 CONTACT INFORMATION:
 👤 Contact Person: ${formData.name}
 📧 Email Address: ${formData.email}
-${formData.company ? `🏢 Company: ${formData.company}\n` : ''}🎯 Service Interest: ${serviceLabel}
+${formData.phone ? `📱 Phone Number: ${formData.countryCode ? `${formData.countryCode} ${formData.phone}` : formData.phone}\n` : ''}${formData.company ? `🏢 Company: ${formData.company}\n` : ''}🎯 Service Interest: ${serviceLabel}
 
 PROJECT DETAILS:
 ${formData.message}
@@ -488,6 +495,7 @@ export const sendContactFormEmail = async (formData, serviceOptions) => {
       to_email: EMAIL_CONFIG.to,
       from_name: formData.name,
       from_email: formData.email,
+      from_phone: formData.countryCode ? `${formData.countryCode} ${formData.phone}` : formData.phone,
       company: formData.company || 'Individual',
       service: serviceOptions.find(opt => opt.value === formData.service)?.label || formData.service,
       message: formData.message,
